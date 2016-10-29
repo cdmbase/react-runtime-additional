@@ -16,4 +16,4 @@ export const logger = {
     verbose: console.log
 }
 
-export default logger;
+module.exports = logger;
