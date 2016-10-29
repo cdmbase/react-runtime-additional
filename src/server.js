@@ -1,66 +1,33 @@
-var winston = require('winston');
+var bunyan = require('bunyan');
 
 
-// Define levels
-var customLevels = {
-    levels: {
-        error: 0,
-        warn: 1,
-        info: 2,
-        auth: 3,
-        verbose: 4,
-        debug: 5,
-    },
-    colors: {
-        error: 'red',
-        warn: 'yellow',
-        info: 'green',
-        auth: 'yellow',
-        verbose: 'blue',
-        debug: 'blue',
-    }
-};
 var logger;
 
 if (process.env.NODE_ENV === "production") {
-    //
-    // Requiring `winston-papertrail` will expose
-    // `winston.transports.Papertrail`
-    //
-    require('winston-papertrail').Papertrail;
-    // To add Winston_Papertrail
-    //TODO: Get the papertrail settings from Meteor.settings
-    logger = new winston.Logger({
-        transports: [
-            new winston.transports.Papertrail({
-                levels: customLevels.levels,
-                colors: customLevels.colors,
+    //TODO: Get the  settings from Meteor.settings or node environment
+    var bsyslog = require('bunyan-syslog');
+
+    logger = bunyan.createLogger({
+        name: 'app',
+        streams: [{
+            level: 'info',
+            type: 'raw',
+            stream: bsyslog.createBunyanStream({
+                type: 'sys',
+                facility: bsyslog.local0,
                 host: 'logs3.papertrailapp.com',
-                port: '21596',
-                level: Meteor.settings.loglevel || 'debug',
-                handleExceptions: true,
-                json: true,
-                colorize: true,
-                logFormat: function (level, message) {
-                    return level + ': ' + message;
-                }
+                port: '21596'
             })
-        ]
-    })
+        }]
+        }
+    )
 
 } else {
-    logger = new winston.Logger({
-        transports: [
-            new winston.transports.Console({
-                name: 'console',
-                timestamp: true,
-                levels:customLevels.levels,
-                colors:customLevels.colors,
-                level: 'debug'
-            })
-        ]
-    })
-
+    logger = bunyan.createLogger({
+        name: 'app',
+        stream: process.stdout,
+        level: 'debug'
+    });
 }
 
 module.exports = logger;

@@ -1,7 +1,7 @@
 {
   "name": "cdm-logger",
   "version": "1.0.0",
-  "description": "",
+  "description": "Wrapper for logging",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -36,7 +36,7 @@
     "mocha": "^2.5.1"
   },
   "dependencies": {
-    "winston": "^2.2.0",
-    "winston-papertrail": "^1.0.3"
+    "bunyan": "^1.8.4",
+    "bunyan-syslog": "^0.3.1"
   }
 }
