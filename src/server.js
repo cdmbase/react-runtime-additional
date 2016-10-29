@@ -1,4 +1,4 @@
-import winston from 'winston';
+var winston = require('winston');
 
 
 // Define levels
@@ -20,21 +20,9 @@ var customLevels = {
         debug: 'blue',
     }
 };
-let logger;
+var logger;
 
-if (process.env.NODE_ENV === "development") {
-    logger = new winston.Logger({
-        transports: [
-            new winston.transports.Console({
-                name: 'console',
-                timestamp: true,
-                levels:customLevels.levels,
-                colors:customLevels.colors,
-                level: 'debug'
-            })
-        ]
-    })
-} else {
+if (process.env.NODE_ENV === "production") {
     //
     // Requiring `winston-papertrail` will expose
     // `winston.transports.Papertrail`
@@ -60,6 +48,19 @@ if (process.env.NODE_ENV === "development") {
         ]
     })
 
+} else {
+    logger = new winston.Logger({
+        transports: [
+            new winston.transports.Console({
+                name: 'console',
+                timestamp: true,
+                levels:customLevels.levels,
+                colors:customLevels.colors,
+                level: 'debug'
+            })
+        ]
+    })
+
 }
 
-module.exports =  logger;
+module.exports = logger;

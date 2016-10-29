@@ -2,13 +2,13 @@
 
 function prepend(argument) {
     return function() {
-        let arg = [].slice.call(arguments);
+        var arg = [].slice.call(arguments);
         args.unshift(argument);
         console.log.apply(console, args);
     }
 }
 
-export const logger = {
+var logger = exports = {
     info: console.log,
     warn: prepend("⚠️"),
     error: prepend("☠️"),
