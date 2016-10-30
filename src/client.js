@@ -24,6 +24,6 @@ const logger = bunyan.createLogger({
     name: 'app',
     stream: new MyRawStream(),
     type: 'raw',
-    level: isMeteor() && Meteor.settings.public.loglevel || 'info'
+    level: isMeteor() && Meteor.settings.public.logLevel || 'info'
 });
 module.exports = logger;

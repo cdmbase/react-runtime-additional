@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === "production") {
     var bsyslog = require('bunyan-syslog');
 
     type = 'raw';
-    level =  isMeteor() && Meteor.settings.public.loglevel || process.env.logLevel || 'info';
+    level =  isMeteor() && Meteor.settings.public.logLevel || process.env.logLevel || 'info';
 
     stream = bsyslog.createBunyanStream({
         type: 'sys',
@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === "production") {
     //type = 'raw';
     type = 'stream';
     stream = process.stdout;
-    level =  isMeteor() && Meteor.settings.public.loglevel || process.env.logLevel || 'debug'
+    level =  isMeteor() && Meteor.settings.public.logLevel || process.env.logLevel || 'debug'
 }
 const logger = bunyan.createLogger({
         name: 'app',
