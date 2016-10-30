@@ -1,6 +1,9 @@
 var bunyan = require('bunyan');
 var isMeteor = require('./util');
 
+function MyRawStream() {
+}
+
 MyRawStream.prototype.write = function (rec) {
     console.log('[%s] %s: %s',
         rec.time.toISOString(),
