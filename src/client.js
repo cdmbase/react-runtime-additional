@@ -5,10 +5,19 @@ function MyRawStream() {
 }
 
 MyRawStream.prototype.write = function (rec) {
+    if(!rec){
+        return undefined;
+    }
+    var recObj
+    if(rec instanceof Object){
+        recObj = rec;
+    } else {
+        recObj = JSON.parse(rec);
+    }
     console.log('[%s] %s: %s',
-        rec.time.toISOString(),
-        bunyan.nameFromLevel[rec.level],
-        rec.msg);
+       // recObj.time.toISOString(),
+        bunyan.nameFromLevel[recObj.level],
+        recObj.msg);
 }
 
 const logger = bunyan.createLogger({
