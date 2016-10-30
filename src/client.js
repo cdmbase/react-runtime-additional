@@ -15,7 +15,7 @@ MyRawStream.prototype.write = function (rec) {
         recObj = JSON.parse(rec);
     }
     console.log('[%s] %s: %s',
-       // recObj.time.toISOString(),
+        recObj.time.toISOString(),
         bunyan.nameFromLevel[recObj.level],
         recObj.msg);
 }
