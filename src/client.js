@@ -1,26 +1,17 @@
 var bunyan = require('bunyan');
+var isMeteor = require('./util');
 
+MyRawStream.prototype.write = function (rec) {
+    console.log('[%s] %s: %s',
+        rec.time.toISOString(),
+        bunyan.nameFromLevel[rec.level],
+        rec.msg);
+}
 
-// function prepend(argument) {
-//     return function() {
-//         var arg = [].slice.call(arguments);
-//         args.unshift(argument);
-//         console.log.apply(console, args);
-//     }
-// }
-
-// var logger = exports = {
-//     info: console.log,
-//     warn: prepend("⚠️"),
-//     error: prepend("☠️"),
-//     debug: console.log,
-//     verbose: console.log
-// }
-
-logger = bunyan.createLogger({
+const logger = bunyan.createLogger({
     name: 'app',
-    stream: process.stdout,
-    level: 'debug'
+    stream: new MyRawStream(),
+    type: 'raw',
+    level: isMeteor() && Meteor.settings.public.loglevel || 'info'
 });
-
 module.exports = logger;
