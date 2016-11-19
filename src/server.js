@@ -1,5 +1,4 @@
 var bunyan = require('bunyan');
-var PrettyStream = require('bunyan-prettystream');
 var isMeteor = require('./util');
 
 var stream, level, type;

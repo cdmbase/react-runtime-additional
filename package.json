@@ -37,7 +37,6 @@
   },
   "dependencies": {
     "bunyan": "^1.8.4",
-    "bunyan-prettystream": "nicolasgramlich/node-bunyan-prettystream",
     "bunyan-syslog": "^0.3.1"
   }
 }
