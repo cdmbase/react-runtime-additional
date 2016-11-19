@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === "production") {
 
     type = 'raw';
     level =  isMeteor() && Meteor.settings.public.logLevel || process.env.logLevel || 'info';
-
+    console.log("level selected" + level);
     stream = bsyslog.createBunyanStream({
         type: 'sys',
         facility: bsyslog.local0,
