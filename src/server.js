@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === "production") {
     level =  isMeteor() && Meteor.settings.public.logLevel || process.env.logLevel || 'info';
     streams = [{
         type: 'rotating-file',
-        path: `logs/${app}.log`,
+        path: `${app}.log`,
         period: '1d',   // daily rotation
         count: 3        // keep 3 back copies    }
     }]
