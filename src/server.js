@@ -1,7 +1,7 @@
 var bunyan = require('bunyan');
 var isMeteor = require('./util');
 
-var  level, type, streams;
+var  level, streams;
 
 const app = process.env.APP_NAME || 'app';
 if (process.env.NODE_ENV === "production") {
@@ -19,9 +19,8 @@ if (process.env.NODE_ENV === "production") {
 } else {
     //stream = new PrettyStream(process.stdout);
     //type = 'raw';
-    type = 'stream';
     level =  isMeteor() && Meteor.settings.public.logLevel || process.env.logLevel || 'debug';
-    streams: [{
+    streams =  [{
         level: level,
         type: 'stream',
         stream: process.stdout,
