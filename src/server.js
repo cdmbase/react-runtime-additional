@@ -3,21 +3,19 @@ var isMeteor = require('./util');
 
 var stream, level, type;
 
-
+const app = process.env.APP_NAME || 'app';
 if (process.env.NODE_ENV === "production") {
     //TODO: Get the  settings from Meteor.settings or node environment
     console.log("It is production");
-    var bsyslog = require('bunyan-syslog');
 
     type = 'raw';
     level =  isMeteor() && Meteor.settings.public.logLevel || process.env.logLevel || 'info';
-    console.log("level selected" + level);
-    stream = bsyslog.createBunyanStream({
-        type: 'sys',
-        facility: bsyslog.local0,
-        host: 'logs3.papertrailapp.com',
-        port: '21596'
-    })
+    stream = {
+        type: 'rotation-file',
+        path: `/var/log/${app}.log`,
+        period: '1d',   // daily rotation
+        count: 3        // keep 3 back copies    }
+    }
 
 } else {
     //stream = new PrettyStream(process.stdout);
@@ -27,11 +25,11 @@ if (process.env.NODE_ENV === "production") {
     level =  isMeteor() && Meteor.settings.public.logLevel || process.env.logLevel || 'debug'
 }
 const logger = bunyan.createLogger({
-        name: 'app',
+        name: app,
         streams: [{
             level: level,
             type: type,
-            stream: stream
+            stream: stream,
         }]
     }
 )
