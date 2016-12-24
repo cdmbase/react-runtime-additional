@@ -13,5 +13,6 @@ loggerClient.debug("Testing logger debug");
 var loggerServer = require('./src/server');
 
 console.log("Testing -- Server");
+// to test production, try process.env.NODE_ENV=production
 loggerServer.info("Testing logger server info");
 loggerServer.debug("Testing logger server debug");
